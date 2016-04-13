@@ -13,7 +13,7 @@ MainWindow::MainWindow()
 	overallLayout->addLayout(pokemonDisplayLayout);
 
 	// // Selected pokemon display
-	pokemonListWidget = new QListWidget();
+	pokemonListWidget = new QListWidget(); // allows for a list of clickable items
 	connect(pokemonListWidget, SIGNAL(currentRowChanged(int)), this, SLOT(displayPokemon(int)));
 	overallLayout->addWidget(pokemonListWidget);
 
@@ -30,16 +30,6 @@ MainWindow::MainWindow()
 
 	// Make it so image and name are at the top
 	pokemonDisplayLayout->addStretch();
-
-
-
-
-	// // List of all pokemon
-	//TODO
-	pokemonListWidget = new QListWidget();
-	connect(pokemonListWidget, SIGNAL(currentRowChanged(int)), this, SLOT(displayPokemon(int)));
-	overallLayout->addWidget(pokemonListWidget);
-
 
 	// // Form to add pokemon
 	// Layout
