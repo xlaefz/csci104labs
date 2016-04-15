@@ -50,6 +50,7 @@ void Sudoku::print() {
   std::cout << "-------------------------------" << std::endl;
 }
 
+// Checks for duplicates in board
 bool Sudoku::isValid(int row, int col) {
 
 
@@ -100,31 +101,70 @@ void Sudoku::solve(){
   solveHelper(0, 0);
 }
 
+  /* Pseudocode:
+     backtrack{
+        base case
+        for (options) {
+          choose an option
+          recursively explore that option
+          unchoose the option
+        } */
+
 bool Sudoku::solveHelper(int row, int col) {
   // TODO: IMPLEMENT THIS
-  if(row == 9) {
+
+  // Base case, hit the edge of board
+  if (row == 9)
     return true;
-  }
-  else {
-    if (board[row][col] != 0) {
-      if(row != 8) {
-        if (solveHelper(row, col + 1)) return true;
-      } else {
-        if(solveHelper(row + 1, 0)) return true;
-      }
-    } else { //if empty run this
-      for (int num = 1; num <= 9; num++) { 
-        board[row][col] = num;
-        if (isValid(row, col)) {
-          if(row != 8) {
+
+  else
+  {
+    if (board[row][col] == 0)
+    {
+      for (int i=1; i<10; i++)
+      {
+
+        board[row][col] = i;
+
+        // Explore option recursively
+        if (isValid(row, col)) 
+        {
+          // Go to next row if at end of column
+          if (col == 8)
+          {
+            if (solveHelper(row + 1, 0)) return true;
+          }
+
+          // Keep going through row
+          else
+          {
             if (solveHelper(row, col + 1)) return true;
-          } else {
-            if(solveHelper(row + 1, 0)) return true;
           }
         }
+
+        // Unchoose option
+        board[row][col] = 0;
+      
       }
-      board[row][col] = 0;
+    }
+
+    else 
+    {
+          // Go to next row if at end of column
+          if (col == 8)
+          {
+            if (solveHelper(row + 1, 0)) return true;
+          }
+
+          // Keep going through row
+          else
+          {
+            if (solveHelper(row, col + 1)) return true;
+          }
     }
   }
+
   return false;
+
+
 }
